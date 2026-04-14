@@ -1,0 +1,46 @@
+{
+  "name": "@syckron/wayapi-cli",
+  "version": "1.0.1",
+  "description": "Wayapi CLI - Testador de APIs elegante via terminal",
+  "main": "./dist/app.js",
+  "type": "module",
+  "bin": {
+    "wayapi": "./dist/app.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "tsx src/app.tsx",
+    "build": "tsc && chmod +x dist/app.js",
+    "prepublishOnly": "pnpm build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "cli",
+    "api",
+    "testing",
+    "ink",
+    "react"
+  ],
+  "author": "Syckron",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@inkjs/ui": "^2.0.0",
+    "axios": "^1.15.0",
+    "ink": "^7.0.0",
+    "ink-text-input": "^6.0.0",
+    "react": "^19.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}
