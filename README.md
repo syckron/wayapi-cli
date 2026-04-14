@@ -110,8 +110,8 @@ wayapi-cli/
 ```bash
 git clone https://github.com/syckron/wayapi-cli.git
 cd wayapi-cli
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ---
@@ -119,7 +119,7 @@ npm run dev
 ## 🏗️ Build
 
 ```bash
-npm run build
+pnpm build
 ```
 
 ---
