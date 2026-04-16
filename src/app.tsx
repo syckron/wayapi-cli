@@ -166,7 +166,7 @@ const App = () => {
     return (
         <Box gap={1} borderStyle="round" borderColor="cyan" flexDirection="column">
             <RequestForm onSubmit={handleSubmit} onChange={setUrlInput} isActive={mode === "url"} />
-            <Text dimColor>Tab to switch • {mode.toUpperCase()} | ESC - Exit {loading && "| Carregando..."}</Text>
+            <Text dimColor>Tab to switch • {mode.toUpperCase()} | ESC - Exit {loading && "| Loading..."}</Text>
             <MethodSelector onChange={setMethod} isActive={mode === "method"} />
             {["POST", "PUT", "PATCH"].includes(method) && (
                 <EditForm onGetContent={handleGetContent} contentForEdit={contentForEdit} isActive={mode === "body"} />
