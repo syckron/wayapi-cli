@@ -28,15 +28,23 @@ const App = () => {
     const [method, setMethod] = useState<string>("GET");
     const [urlInput, setUrlInput] = useState<string>("");
     const [requestTrigger, setRequestTrigger] = useState<number>(0);
-    const [content, setContent] = useState<Contents>({
-        body: null, headers: null
-    });
     const [loading, setLoading] = useState<boolean>(false);
     const [postBody, setPostBody] = useState<string>("");
     const [contentForEdit, setContentForEdit] = useState<string>("");
     const [infos, setInfos] = useState<Info>({
         status: null, time: null
     });
+    const [content, setContent] = useState<Contents>({
+        body: null, headers: null
+    });
+    const [payloadStatus, setPayloadStatus] = useState<{
+        valid: boolean | null;
+        message: string;
+    }>({
+        valid: null,
+        message: ""
+    });
+    
     const { exit } = useApp();
     
     useInput((input, key) => {
@@ -70,7 +78,7 @@ const App = () => {
     
     const handleSubmit = (val: string) => {
         setUrlInput(val);
-        setRequestTrigger(prev => prev + 1); // Dispara a execução real
+        setRequestTrigger(prev => prev + 1);
     }
     
     const handleGetContent = (contentPost: string) => {
@@ -79,24 +87,40 @@ const App = () => {
     
     useEffect(() => {
         if (requestTrigger === 0 || !urlInput) return;
+        if (!postBody) {
+            setPayloadStatus({
+                valid: null,
+                message: ""
+            });
+        }
         
         const manageApi = async () => {
             setLoading(true);
             
             try {
                 let bodyToSend: any = undefined;
-                
+                let isRaw = false;
+
                 if (["POST", "PUT", "PATCH"].includes(method) && postBody) {
                     const parseResult = parseJsonSafely(postBody);
-                    
-                    if (!parseResult.success) {
-                        setContent({ 
-                            body: `JSON inválido: ${parseResult.error}`, 
-                            headers: null 
+                
+                    if (parseResult.success) {
+                        bodyToSend = parseResult.data;
+                
+                        setPayloadStatus({
+                            valid: true,
+                            message: "✓ Valid JSON"
                         });
-                        return;
+                
+                    } else {
+                        bodyToSend = postBody;
+                        isRaw = true;
+                
+                        setPayloadStatus({
+                            valid: false,
+                            message: "X Invalid JSON\n⚠ sent as text (RAW)"
+                        });
                     }
-                    bodyToSend = parseResult.data;
                 }
                 
                 const { body, status, time, headers } = await request(
@@ -147,7 +171,7 @@ const App = () => {
             {["POST", "PUT", "PATCH"].includes(method) && (
                 <EditForm onGetContent={handleGetContent} contentForEdit={contentForEdit} isActive={mode === "body"} />
             )}
-            <Content content={content} infos={infos} modeContent={modeContent} isActive={mode === "content"} />
+            <Content content={content} infos={infos} modeContent={modeContent} isActive={mode === "content"} payloadStatus={payloadStatus} />
         </Box>
     )
 }

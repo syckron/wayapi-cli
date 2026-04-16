@@ -5,14 +5,19 @@ import { type Contents } from '../app.js';
 
 type ModeContents = "body" | "headers";
 
+
 interface Props {
     content: Contents;
     infos: InfosProps["infos"];
     modeContent: ModeContents;
     isActive: boolean;
+    payloadStatus: {
+        valid: boolean | null;
+        message: string;
+    };
 }
 
-const Content = ({ content, infos, modeContent, isActive }: Props) => {
+const Content = ({ content, infos, modeContent, isActive, payloadStatus }: Props) => {
     const display = modeContent === "body" ? content.body : content.headers;
     
     const displayText = (() => {
@@ -30,10 +35,19 @@ const Content = ({ content, infos, modeContent, isActive }: Props) => {
     })();
 
     return (
-        <Box flexDirection="column">
-            <Infos infos={infos} modeContent={modeContent} isActive={isActive} />
-            <Box borderStyle="round" borderColor="blue">
-                <Text>{displayText}</Text>
+        <Box alignItems="center" flexDirection="column">
+            {payloadStatus.valid !== null && (
+                <Box marginBottom={1}>
+                    <Text color={payloadStatus.valid ? "green" : "red"}>
+                        {payloadStatus.message}
+                    </Text>
+                </Box>
+            )}
+            <Box width="100%" flexDirection="column">
+                <Infos infos={infos} modeContent={modeContent} isActive={isActive} />
+                <Box borderStyle="round" borderColor="blue">
+                    <Text>{displayText}</Text>
+                </Box>
             </Box>
         </Box>
     );

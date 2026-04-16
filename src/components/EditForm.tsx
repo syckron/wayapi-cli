@@ -63,7 +63,7 @@ const EditForm = ({ onGetContent, contentForEdit, isActive }: Props) => {
                     <Text color="green">✓ ok</Text>
                 )}
                 {isValid === false && (
-                    <Text color="red">x {error}</Text>
+                    <Text color="red">X {error}</Text>
                 )}
                 {isValid === null && (
                     <Text dimColor>...</Text>
