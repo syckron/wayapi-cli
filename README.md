@@ -25,8 +25,11 @@ WayAPI CLI é um cliente de API minimalista e eficiente que roda diretamente no 
   - Headers
   - Corpo da resposta
 
-- ✅ **Validação de JSON**  
-  Verificação integrada para garantir que o corpo enviado é válido.
+- ✅ **Validação de JSON em Tempo Real**  
+  O editor valida automaticamente o JSON digitado após alguns segundos de inatividade:
+  - Indicação visual (borda verde/vermelha)
+  - Mensagem de status (`ok` ou erro)
+  - Feedback imediato para correção de sintaxe
 
 ---
 

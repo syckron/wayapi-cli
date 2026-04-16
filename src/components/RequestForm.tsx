@@ -13,7 +13,7 @@ const RequestForm = ({ onSubmit, onChange, isActive }: Props) => {
     const [value, setValue] = useState<string>("");
 
     return (
-        <Box gap={1} borderStyle="round" borderColor="yellow">
+        <Box gap={1} borderStyle="round" borderColor="white">
             <Text color="green">URL:</Text>
             {isActive ? (
                 <TextInput
