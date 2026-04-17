@@ -61,7 +61,7 @@ const App = () => {
             } catch (err) {
                 setContentForEdit("");
             }
-        }, 1200);
+        }, 1000);
     
         return () => clearTimeout(timer);
     }, [urlInput, method]);

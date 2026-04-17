@@ -7,7 +7,7 @@ WayAPI CLI é um cliente de API minimalista e eficiente que roda diretamente no 
 ## ✨ Funcionalidades
 
 - 🎯 **Interface Interativa**  
-  UI baseada em componentes React renderizados no terminal.
+  Interface interativa baseada em React renderizado no terminal via Ink.
 
 - 🌐 **Suporte a Métodos HTTP**  
   GET, POST, PUT, PATCH e DELETE com seleção rápida.
@@ -74,7 +74,7 @@ wayapi
 | `U` | Seleciona método PUT |
 | `A` | Seleciona método PATCH |
 | `D` | Seleciona método DELETE |
-| `Enter` | Dispara a requisição (no campo URL) |
+| `Enter` | Executa requisição (no campo URL) |
 
 ---
 
@@ -129,16 +129,9 @@ pnpm build
 
 ## 📝 Notas de Implementação
 
-- ⏱️ **Debounce no Edit**  
-  Um `useEffect` dispara automaticamente um GET após 3 segundos de inatividade na URL (somente em PUT/PATCH), para preencher o formulário.
-
-- ⚠️ **Tratamento de Erros**  
-  O sistema diferencia:
-  - Erros de rede
-  - Erros de parsing de JSON
-  - Erros retornados pela API  
-
-  Tudo exibido de forma clara no terminal.
+- Debounce no input da URL para pré-carregamento em PUT/PATCH
+- Validação de JSON em tempo real com feedback visual
+- Tratamento de erros de rede e parsing
 
 ---
 
