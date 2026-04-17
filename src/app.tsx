@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // wayapi-cli/src/app.tsx
-import { render, Text, Box, useInput, useApp } from 'ink';
+import { render, Text, Box, useInput, useApp, useStdout } from 'ink';
 import { parseJsonSafely } from './utils/typeGuards.js';
 import type { Mode, ModeContents, Contents, Info, PayLoadStatus } from './types/types.js';
 import RequestForm from './components/RequestForm.js';
@@ -32,6 +32,10 @@ const App = () => {
     });
     
     const { exit } = useApp();
+    const { stdout } = useStdout();
+
+    const maxWidth = 90;
+    const currentWidth = stdout ? Math.min(stdout.columns, maxWidth) : maxWidth;
     
     useInput((input, key) => {
         if (key.escape) exit();
@@ -78,35 +82,23 @@ const App = () => {
     useEffect(() => {
         if (requestTrigger === 0 || !urlInput) return;
         
-        if (!postBody) {
-            setPayloadStatus({
-                valid: null,
-                message: ""
-            });
-        }
-        
         const manageApi = async () => {
             setLoading(true);
             
             try {
                 let bodyToSend: any = undefined;
-                let isRaw = false;
 
                 if (["POST", "PUT", "PATCH"].includes(method) && postBody) {
                     const parseResult = parseJsonSafely(postBody);
                 
                     if (parseResult.success) {
                         bodyToSend = parseResult.data;
-                
                         setPayloadStatus({
                             valid: true,
                             message: "✓ Valid JSON"
                         });
-                
                     } else {
                         bodyToSend = postBody;
-                        isRaw = true;
-                
                         setPayloadStatus({
                             valid: false,
                             message: "X Invalid JSON\n⚠ sent as text (RAW)"
@@ -164,16 +156,37 @@ const App = () => {
     }, [method]);
     
     return (
-        <Box gap={1} borderStyle="round" borderColor="cyan" flexDirection="column">
-            <RequestForm onSubmit={handleSubmit} onChange={setUrlInput} isActive={mode === "url"} />
-            <Text dimColor>Tab to switch • {mode.toUpperCase()} | ESC - Exit {loading && "| Loading..."}</Text>
-            <MethodSelector onChange={setMethod} isActive={mode === "method"} />
-            {["POST", "PUT", "PATCH"].includes(method) && (
-                <EditForm key={method} onGetContent={handleGetContent} contentForEdit={contentForEdit} isActive={mode === "body"} />
-            )}
-            <Content content={content} infos={infos} modeContent={modeContent} isActive={mode === "content"} payloadStatus={payloadStatus} />
+        <Box width="100%" justifyContent="center" paddingX={1}>
+            <Box 
+                width={currentWidth} 
+                gap={1} 
+                borderStyle="round" 
+                borderColor="cyan" 
+                flexDirection="column"
+            >
+                <RequestForm onSubmit={handleSubmit} onChange={setUrlInput} isActive={mode === "url"} />
+                
+                <Box flexDirection="column">
+                    <Text dimColor>
+                        Tab to switch • {mode.toUpperCase()} | ESC - Exit {loading && "| Loading..."}
+                    </Text>
+                    <MethodSelector onChange={setMethod} isActive={mode === "method"} />
+                </Box>
+
+                {["POST", "PUT", "PATCH"].includes(method) && (
+                    <EditForm key={method} onGetContent={handleGetContent} contentForEdit={contentForEdit} isActive={mode === "body"} />
+                )}
+                
+                <Content 
+                    content={content} 
+                    infos={infos} 
+                    modeContent={modeContent} 
+                    isActive={mode === "content"} 
+                    payloadStatus={payloadStatus} 
+                />
+            </Box>
         </Box>
-    )
+    );
 }
 
 render(<App />);
