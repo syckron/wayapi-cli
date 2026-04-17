@@ -2,7 +2,7 @@
 // wayapi-cli/src/app.tsx
 import { render, Text, Box, useInput, useApp } from 'ink';
 import { parseJsonSafely } from './utils/typeGuards.js';
-import type { Mode, ModeContents, Contents, Info, payloadStatus } from './types/types.js';
+import type { Mode, ModeContents, Contents, Info, PayLoadStatus } from './types/types.js';
 import RequestForm from './components/RequestForm.js';
 import Content from './components/Content.js';
 import MethodSelector from './components/MethodSelector.js';
@@ -26,7 +26,7 @@ const App = () => {
     const [content, setContent] = useState<Contents>({
         body: null, headers: null
     });
-    const [payloadStatus, setPayloadStatus] = useState<payloadStatus>({
+    const [payloadStatus, setPayloadStatus] = useState<PayLoadStatus>({
         valid: null,
         message: ""
     });

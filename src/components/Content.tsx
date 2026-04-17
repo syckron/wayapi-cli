@@ -1,7 +1,7 @@
 // wayapi-cli/src/components/Content.tsx
 import { Box, Text } from 'ink';
 import Infos, { type InfosProps } from './Infos.js';
-import { type Contents } from '../app.js';
+import { type Contents } from '../types/types.js';
 
 type ModeContents = "body" | "headers";
 
