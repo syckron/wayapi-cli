@@ -2,6 +2,7 @@
 // wayapi-cli/src/app.tsx
 import { render, Text, Box, useInput, useApp } from 'ink';
 import { parseJsonSafely } from './utils/typeGuards.js';
+import type { Mode, ModeContents, Contents, Info, payloadStatus } from './types/types.js';
 import RequestForm from './components/RequestForm.js';
 import Content from './components/Content.js';
 import MethodSelector from './components/MethodSelector.js';
@@ -10,19 +11,7 @@ import { request } from './services/api.js';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-type Info = {
-    status: number | null;
-    time: number | null;
-}
-
-export type Contents = {
-    body: unknown;
-    headers: unknown;
-}
-
 const App = () => {
-    type Mode = "url" | "method" | "body" | "content";
-    type ModeContents = "body" | "headers"
     const [mode, setMode] = useState<Mode>("url");
     const [modeContent, setModeContent] = useState<ModeContents>("body");
     const [method, setMethod] = useState<string>("GET");
@@ -37,10 +26,7 @@ const App = () => {
     const [content, setContent] = useState<Contents>({
         body: null, headers: null
     });
-    const [payloadStatus, setPayloadStatus] = useState<{
-        valid: boolean | null;
-        message: string;
-    }>({
+    const [payloadStatus, setPayloadStatus] = useState<payloadStatus>({
         valid: null,
         message: ""
     });
@@ -49,8 +35,12 @@ const App = () => {
     
     useInput((input, key) => {
         if (key.escape) exit();
-        if (input === "1") setModeContent("body");
-        if (input === "2") setModeContent("headers");
+    
+        if (mode === "content") {
+            if (input === "1") setModeContent("body");
+            if (input === "2") setModeContent("headers");
+        }
+    
         if (key.tab) {
             setMode(m => {
                 if (m === "url") return "method";
@@ -60,7 +50,7 @@ const App = () => {
             });
         };
     });
-    
+
     useEffect(() => {
         if (!urlInput || !["PUT", "PATCH"].includes(method)) return;
     
@@ -71,7 +61,7 @@ const App = () => {
             } catch (err) {
                 setContentForEdit("");
             }
-        }, 3000);
+        }, 1200);
     
         return () => clearTimeout(timer);
     }, [urlInput, method]);
@@ -87,6 +77,7 @@ const App = () => {
     
     useEffect(() => {
         if (requestTrigger === 0 || !urlInput) return;
+        
         if (!postBody) {
             setPayloadStatus({
                 valid: null,
@@ -140,18 +131,18 @@ const App = () => {
                         time: null
                     });
                     setContent({ 
-                        body: `Erro na API: ${errorMessage}`, 
+                        body: `API Error: ${errorMessage}`, 
                         headers: null 
                     });
                 } else if (err instanceof Error) {
                     setInfos({ status: null, time: null });
                     setContent({ 
-                        body: `Erro: ${err.message}`, 
+                        body: `Error: ${err.message}`, 
                         headers: null 
                     });
                 } else {
                     setContent({ 
-                        body: "Erro inesperado", 
+                        body: "Unexpected error", 
                         headers: null 
                     });
                 }
@@ -163,13 +154,22 @@ const App = () => {
         manageApi();
     }, [requestTrigger]);
     
+    useEffect(() => {
+        if (!["POST", "PUT", "PATCH"].includes(method)) {
+            setPayloadStatus({
+                valid: null,
+                message: ""
+            });
+        }
+    }, [method]);
+    
     return (
         <Box gap={1} borderStyle="round" borderColor="cyan" flexDirection="column">
             <RequestForm onSubmit={handleSubmit} onChange={setUrlInput} isActive={mode === "url"} />
             <Text dimColor>Tab to switch • {mode.toUpperCase()} | ESC - Exit {loading && "| Loading..."}</Text>
             <MethodSelector onChange={setMethod} isActive={mode === "method"} />
             {["POST", "PUT", "PATCH"].includes(method) && (
-                <EditForm onGetContent={handleGetContent} contentForEdit={contentForEdit} isActive={mode === "body"} />
+                <EditForm key={method} onGetContent={handleGetContent} contentForEdit={contentForEdit} isActive={mode === "body"} />
             )}
             <Content content={content} infos={infos} modeContent={modeContent} isActive={mode === "content"} payloadStatus={payloadStatus} />
         </Box>

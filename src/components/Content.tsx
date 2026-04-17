@@ -1,10 +1,9 @@
-// wayapi-cli/src/components/Context.tsx
+// wayapi-cli/src/components/Content.tsx
 import { Box, Text } from 'ink';
 import Infos, { type InfosProps } from './Infos.js';
 import { type Contents } from '../app.js';
 
 type ModeContents = "body" | "headers";
-
 
 interface Props {
     content: Contents;
@@ -30,7 +29,7 @@ const Content = ({ content, infos, modeContent, isActive, payloadStatus }: Props
         try {
             return JSON.stringify(display, null, 2);
         } catch {
-            return "Erro ao formatar conteúdo";
+            return "Error formatting content";
         }
     })();
 

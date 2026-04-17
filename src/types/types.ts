@@ -1,16 +1,20 @@
 // wayapi-cli/src/types/types.ts
-interface HttpHeaders {
+export interface HttpHeaders {
     [key: string]: string | string[] | undefined;
 }
 
-interface JsonValue {
-    [key: string]: JsonValue | JsonValue[] | string | number | boolean | null;
+export type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+export type JsonObject = { [key: string]: JsonValue };
+export type JsonArray = JsonValue[];
+export type ResponseBody = JsonObject | JsonArray | string | null;
+
+export type Mode = "url" | "method" | "body" | "content";
+export type ModeContents = "body" | "headers";
+
+export type Info = {
+    status: number | null;
+    time: number | null;
 }
-
-type JsonObject = { [key: string]: JsonValue };
-type JsonArray = JsonValue[];
-
-type ResponseBody = JsonObject | JsonArray | string | null;
 
 export interface ApiResponse {
     body: ResponseBody;
@@ -22,4 +26,9 @@ export interface ApiResponse {
 export interface Contents {
     body: ResponseBody;
     headers: HttpHeaders | null;
+}
+
+export interface PayLoadStatus {
+    valid: boolean | null;
+    message: string;
 }

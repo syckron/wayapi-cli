@@ -1,37 +1,12 @@
 // wayapi-cli/src/services/api.ts
-import axios, { AxiosResponse } from 'axios';
-
-interface HttpHeaders {
-    [key: string]: string | string[] | undefined;
-}
-
-interface JsonValue {
-    [key: string]: JsonValue | JsonValue[] | string | number | boolean | null;
-}
-
-type JsonObject = { [key: string]: JsonValue };
-type JsonArray = JsonValue[];
-type ResponseBody = JsonObject | JsonArray | string | null;
-
-export interface ApiResponse {
-    body: ResponseBody;
-    status: number;
-    headers: HttpHeaders;
-    time: number;
-}
-
-export interface ApiError {
-    message: string;
-    status?: number;
-    time?: number;
-}
-
-function isValidResponseBody(data: unknown): data is ResponseBody {
-    if (data === null) return true;
-    if (typeof data === 'string') return true;
-    if (typeof data === 'object') return true;
-    return false;
-}
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import type { 
+    JsonObject, 
+    JsonArray, 
+    ResponseBody, 
+    ApiResponse, 
+    HttpHeaders 
+} from '../types/types.js';
 
 export const request = async (
     method: string, 
@@ -40,22 +15,29 @@ export const request = async (
 ): Promise<ApiResponse> => {
     const start = Date.now();
     
-    const response: AxiosResponse<unknown> = await axios({ 
-        method, 
-        url, 
-        data 
-    });
-    
-    const duration = Date.now() - start;
-    
-    if (!isValidResponseBody(response.data)) {
-        throw new Error('Invalid response body type');
+    try {
+        const response: AxiosResponse<unknown> = await axios({ 
+            method, 
+            url, 
+            data,
+            timeout: 10000
+        });
+        
+        return {
+            body: response.data as ResponseBody,
+            status: response.status,
+            headers: response.headers as HttpHeaders,
+            time: Date.now() - start
+        };
+    } catch (error) {
+        const duration = Date.now() - start;
+        const axiosError = error as AxiosError;
+
+        return {
+            body: (axiosError.response?.data as ResponseBody) || axiosError.message,
+            status: axiosError.response?.status || 500,
+            headers: (axiosError.response?.headers as HttpHeaders) || {},
+            time: duration
+        };
     }
-    
-    return {
-        body: response.data,
-        status: response.status,
-        headers: response.headers as HttpHeaders,
-        time: duration
-    };
 }
