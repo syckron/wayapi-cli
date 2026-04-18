@@ -1,55 +1,53 @@
 # 🚀 WayAPI CLI
 
-WayAPI CLI é um cliente de API minimalista e eficiente que roda diretamente no seu terminal. Construído com **React** e **Ink**, ele oferece uma interface interativa para realizar requisições HTTP sem precisar sair da linha de comando.
+WayAPI CLI is a minimalist and efficient API client that runs directly in your terminal. Built with **React** and **Ink**, it provides an interactive interface for making HTTP requests without leaving the command line.
+
+![WayAPI CLI in action](https://raw.githubusercontent.com/syckron/wayapi-cli/main/screenshots/demo.png)
+
+> 🇧🇷 [Versão em Português](README_pt-BR.md)
 
 ---
 
-## 📸 Preview
+## ✨ Features
 
-![Demo](https://raw.githubusercontent.com/syckron/wayapi-cli/main/screenshots/demo.png)
+- 🎯 **Interactive Interface**  
+  Interactive interface based on React rendered in the terminal via Ink.
 
----
+- 🌐 **HTTP Methods Support**  
+  GET, POST, PUT, PATCH, and DELETE with quick selection.
 
-## ✨ Funcionalidades
+- 📝 **Body Editor**  
+  Dedicated field for sending JSON in write methods.
 
-- 🎯 **Interface Interativa**  
-  Interface interativa baseada em React renderizado no terminal via Ink.
+- ⚡ **Smart Auto-Fill**  
+  When selecting PUT or PATCH and entering a URL, the CLI automatically attempts to fetch current data to facilitate editing.
 
-- 🌐 **Suporte a Métodos HTTP**  
-  GET, POST, PUT, PATCH e DELETE com seleção rápida.
-
-- 📝 **Editor de Body**  
-  Campo dedicado para envio de JSON em métodos de escrita.
-
-- ⚡ **Auto-Preenchimento Inteligente**  
-  Ao selecionar PUT ou PATCH e inserir uma URL, o CLI tenta buscar automaticamente os dados atuais para facilitar a edição.
-
-- 📊 **Feedback em Tempo Real**  
-  Visualização imediata de:
+- 📊 **Real-Time Feedback**  
+  Instant visualization of:
   - Status Code
-  - Tempo de resposta (ms)
+  - Response time (ms)
   - Headers
-  - Corpo da resposta
+  - Response body
 
-- ✅ **Validação de JSON em Tempo Real**  
-  O editor valida automaticamente o JSON digitado após alguns segundos de inatividade:
-  - Indicação visual (borda verde/vermelha)
-  - Mensagem de status (`ok` ou erro)
-  - Feedback imediato para correção de sintaxe
+- ✅ **Real-Time JSON Validation**  
+  The editor automatically validates the typed JSON after a few seconds of inactivity:
+  - Visual indication (green/red border)
+  - Status message (`ok` or error)
+  - Immediate feedback for syntax correction
 
 ---
 
-## 📦 Instalação
+## 📦 Installation
 
-### Via NPM / PNPM (Recomendado)
+### Via NPM / PNPM (Recommended)
 
-Instale globalmente e use direto no terminal:
+Install globally and use directly in the terminal:
 
 ```bash
 pnpm add -g @syckron/wayapi-cli
 ```
 
-ou com npm:
+or with npm:
 
 ```bash
 npm install -g @syckron/wayapi-cli
@@ -57,9 +55,9 @@ npm install -g @syckron/wayapi-cli
 
 ---
 
-## ▶️ Uso
+## ▶️ Usage
 
-Após instalar, basta rodar:
+After installation, just run:
 
 ```bash
 wayapi
@@ -67,54 +65,55 @@ wayapi
 
 ---
 
-## ⌨️ Comandos e Atalhos
+## ⌨️ Commands and Shortcuts
 
-| Tecla | Ação |
+| Key | Action |
 |------|------|
-| `Tab` | Alterna entre os campos |
-| `Esc` | Fecha a aplicação |
-| `1` | Visualiza o Body da resposta |
-| `2` | Visualiza os Headers |
-| `G` | Seleciona método GET |
-| `P` | Seleciona método POST |
-| `U` | Seleciona método PUT |
-| `A` | Seleciona método PATCH |
-| `D` | Seleciona método DELETE |
-| `Enter` | Executa requisição (no campo URL) |
+| `Tab` | Switch between fields |
+| `Esc` | Close the application |
+| `1` | View response Body |
+| `2` | View Headers |
+| `G` | Select GET method |
+| `P` | Select POST method |
+| `U` | Select PUT method |
+| `A` | Select PATCH method |
+| `D` | Select DELETE method |
+| `Enter` | Execute request (on URL field) |
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Technologies Used
 
-- **React & Ink** → Interface de terminal
-- **Axios** → Requisições HTTP
-- **TypeScript** → Tipagem estática
+- **React & Ink** → Terminal interface
+- **Axios** → HTTP requests
+- **TypeScript** → Static typing
 
 ---
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 wayapi-cli/
 ├── src/
 │   ├── components/
-│   │   ├── Content.tsx        # Exibição dos resultados (Body/Headers)
-│   │   ├── EditForm.tsx       # Campo de entrada para JSON/Body
-│   │   ├── Infos.tsx          # Display de Status e Performance
-│   │   ├── MethodSelector.tsx # Seletor de verbos HTTP
-│   │   └── RequestForm.tsx    # Campo de input da URL
+│   │   ├── Content.tsx        # Results display (Body/Headers)
+│   │   ├── EditForm.tsx       # Input field for JSON/Body
+│   │   ├── JsonViewer.tsx     # JSON colors
+│   │   ├── Infos.tsx          # Status and Performance display
+│   │   ├── MethodSelector.tsx # HTTP verb selector
+│   │   └── RequestForm.tsx    # URL input field
 │   ├── services/
-│   │   └── api.ts             # Configuração do Axios
+│   │   └── api.ts             # Axios configuration
 │   ├── utils/
-│   │   └── typeGuards.ts      # Validadores de tipos e JSON
+│   │   └── typeGuards.ts      # Type validators and JSON
 │   ├── types/
-│   │   └── types.ts           # Interfaces globais
-│   └── app.tsx                # Orquestrador principal
+│   │   └── types.ts           # Global interfaces
+│   └── app.tsx                # Main orchestrator
 ```
 
 ---
 
-## 🧪 Desenvolvimento
+## 🧪 Development
 
 ```bash
 git clone https://github.com/syckron/wayapi-cli.git
@@ -133,27 +132,25 @@ pnpm build
 
 ---
 
-## 📝 Notas de Implementação
+## 📝 Implementation Notes
 
-- Debounce no input da URL para pré-carregamento em PUT/PATCH
-- Validação de JSON em tempo real com feedback visual
-- Tratamento de erros de rede e parsing
-
----
-
-## 💡 Ideia do Projeto
-
-O WayAPI CLI foi pensado para desenvolvedores que querem testar APIs de forma rápida, sem sair do terminal — com uma UX fluida e sem depender de ferramentas pesadas.
+- Debounce on URL input for pre-loading in PUT/PATCH
+- Real-time JSON validation with visual feedback
+- Network and parsing error handling
 
 ---
 
+## 💡 Project Idea
+
+WayAPI CLI was designed for developers who want to test APIs quickly without leaving the terminal — with a fluid UX and without depending on heavy tools.
+
+---
 ## 🔗 Links
 
 - [GitHub](https://github.com/syckron/wayapi-cli)
 - [NPM Package](https://www.npmjs.com/package/@syckron/wayapi-cli)
-
 ---
 
-## 📌 Licença
+## 📌 License
 
 Apache-2.0
