@@ -6,7 +6,7 @@ WayAPI CLI é um cliente de API minimalista e eficiente que roda diretamente no 
 
 ## 📸 Preview
 
-![Demo](./screenshots/demo.png)
+![Demo](https://raw.githubusercontent.com/syckron/wayapi-cli/main/screenshots/demo.png)
 
 ---
 
@@ -144,6 +144,13 @@ pnpm build
 ## 💡 Ideia do Projeto
 
 O WayAPI CLI foi pensado para desenvolvedores que querem testar APIs de forma rápida, sem sair do terminal — com uma UX fluida e sem depender de ferramentas pesadas.
+
+---
+
+## 🔗 Links
+
+- [GitHub](https://github.com/syckron/wayapi-cli)
+- [NPM Package](https://www.npmjs.com/package/@syckron/wayapi-cli)
 
 ---
 
