@@ -5,13 +5,14 @@ import type {
     JsonArray, 
     ResponseBody, 
     ApiResponse, 
-    HttpHeaders 
+    HttpHeaders,
+    JsonValue
 } from '../types/types.js';
 
 export const request = async (
     method: string, 
     url: string, 
-    data?: JsonObject | JsonArray
+    data?: JsonValue
 ): Promise<ApiResponse> => {
     const start = Date.now();
     

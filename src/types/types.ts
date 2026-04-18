@@ -3,13 +3,33 @@ export interface HttpHeaders {
     [key: string]: string | string[] | undefined;
 }
 
-export type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+export type JsonValue =
+    | string
+    | number
+    | boolean
+    | null
+    | JsonObject
+    | JsonArray;
+    
+
+export type ResponseBody =
+    | JsonObject
+    | JsonArray
+    | string
+    | null;
+
+export type Mode = 
+    | "url"
+    | "method"
+    | "body"
+    | "content";
+    
+export type ModeContents =
+    | "body"
+    | "headers";
+    
 export type JsonObject = { [key: string]: JsonValue };
 export type JsonArray = JsonValue[];
-export type ResponseBody = JsonObject | JsonArray | string | null;
-
-export type Mode = "url" | "method" | "body" | "content";
-export type ModeContents = "body" | "headers";
 
 export type Info = {
     status: number | null;
@@ -25,7 +45,7 @@ export interface ApiResponse {
 
 export interface Contents {
     body: ResponseBody;
-    headers: HttpHeaders | null;
+    headers: Record<string, string> | null;
 }
 
 export interface PayLoadStatus {
