@@ -1,6 +1,6 @@
 {
   "name": "@syckron/wayapi-cli",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Wayapi CLI - Elegant API Tester via Terminal",
   "main": "./dist/app.js",
   "type": "module",

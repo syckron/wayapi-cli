@@ -17,6 +17,17 @@ export type ResponseBody =
     | JsonArray
     | string
     | null;
+    
+export type InkColor =
+    | "black"
+    | "red"
+    | "green"
+    | "yellow"
+    | "blue"
+    | "magenta"
+    | "cyan"
+    | "white"
+    | "gray";
 
 export type Mode = 
     | "url"

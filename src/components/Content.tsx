@@ -1,6 +1,6 @@
 // wayapi-cli/src/components/Content.tsx
 import { Box, Text } from 'ink';
-import type { Contents, Info, ModeContents, PayLoadStatus, JsonValue } from '../types/types.js';
+import type { Contents, Info, ModeContents, PayLoadStatus, JsonValue, InkColor } from '../types/types.js';
 import JsonViewer from './JsonViewer.js';
 
 type ContentProps = {
@@ -34,12 +34,24 @@ const Content = ({
 
         return <JsonViewer data={headers} />;
     };
+    
+    const getStatusColor = (status: number | string | null): InkColor => {
+        if (status === null || status === undefined) return "gray";
+    
+        const code = Number(String(status).trim());
+        if (isNaN(code)) return "gray";
+    
+        if (code < 300) return "green";
+        if (code < 400) return "yellow";
+        if (code < 500) return "magenta";
+        return "red";
+    };
 
     return (
         <Box flexDirection="column" borderStyle="round" borderColor={isActive ? "green" : "gray"} padding={1}>
             
             <Box justifyContent="space-between">
-                <Text>
+                <Text color={getStatusColor(infos.status)}>
                     Status: {infos.status ?? "-"}
                 </Text>
                 <Text>
