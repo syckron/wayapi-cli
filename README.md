@@ -4,6 +4,12 @@ WayAPI CLI é um cliente de API minimalista e eficiente que roda diretamente no 
 
 ---
 
+## 📸 Preview
+
+![Demo](./screenshots/demo.png)
+
+---
+
 ## ✨ Funcionalidades
 
 - 🎯 **Interface Interativa**  
